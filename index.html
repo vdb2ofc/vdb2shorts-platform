@@ -1,1 +1,566 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+    <title>VDB2 — Cinema Independente</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background: #0b0b0b;
+            color: #ffffff;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        /* =========================
+           NAVBAR
+        ========================= */
+
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 72px;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            padding: 0 5%;
+
+            background: rgba(11, 11, 11, 0.85);
+            backdrop-filter: blur(12px);
+
+            z-index: 1000;
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: 900;
+            letter-spacing: 2px;
+            color: #ffd21c;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: #dddddd;
+            text-decoration: none;
+            font-size: 14px;
+            transition: 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: #ffd21c;
+        }
+
+        .login-button {
+            border: 1px solid #ffd21c;
+            padding: 9px 18px;
+            border-radius: 6px;
+
+            color: #ffd21c;
+            text-decoration: none;
+
+            font-size: 14px;
+            transition: 0.3s;
+        }
+
+        .login-button:hover {
+            background: #ffd21c;
+            color: #0b0b0b;
+        }
+
+        /* =========================
+           HERO
+        ========================= */
+
+        .hero {
+            min-height: 90vh;
+
+            display: flex;
+            align-items: center;
+
+            padding: 120px 8% 80px;
+
+            position: relative;
+
+            overflow: hidden;
+
+            background:
+                radial-gradient(
+                    circle at 75% 45%,
+                    rgba(255, 138, 0, 0.22),
+                    transparent 35%
+                ),
+                radial-gradient(
+                    circle at 60% 60%,
+                    rgba(255, 210, 28, 0.12),
+                    transparent 30%
+                ),
+                #0b0b0b;
+        }
+
+        .hero-content {
+            max-width: 650px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero-label {
+            color: #ff8a00;
+            font-size: 13px;
+            font-weight: bold;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            margin-bottom: 18px;
+        }
+
+        .hero h1 {
+            font-size: clamp(60px, 9vw, 120px);
+            line-height: 0.9;
+            letter-spacing: -5px;
+            margin-bottom: 25px;
+        }
+
+        .hero h1 span {
+            color: #ffd21c;
+        }
+
+        .hero-description {
+            color: #bdbdbd;
+            font-size: 17px;
+            line-height: 1.6;
+            max-width: 560px;
+            margin-bottom: 30px;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .primary-button {
+            background: #ffd21c;
+            color: #0b0b0b;
+
+            padding: 13px 25px;
+
+            border-radius: 6px;
+
+            text-decoration: none;
+            font-weight: bold;
+
+            transition: 0.3s;
+        }
+
+        .primary-button:hover {
+            background: #ff8a00;
+            transform: translateY(-2px);
+        }
+
+        .secondary-button {
+            background: rgba(255,255,255,0.08);
+            color: white;
+
+            padding: 13px 25px;
+
+            border-radius: 6px;
+
+            text-decoration: none;
+
+            transition: 0.3s;
+        }
+
+        .secondary-button:hover {
+            background: rgba(255,255,255,0.15);
+        }
+
+        /* =========================
+           CATALOG
+        ========================= */
+
+        .section {
+            padding: 70px 5%;
+        }
+
+        .section-title {
+            font-size: 25px;
+            margin-bottom: 25px;
+        }
+
+        .section-title span {
+            color: #ffd21c;
+        }
+
+        .catalog {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
+        }
+
+        .card {
+            height: 310px;
+
+            border-radius: 10px;
+
+            background:
+                linear-gradient(
+                    145deg,
+                    #222222,
+                    #111111
+                );
+
+            border: 1px solid #292929;
+
+            display: flex;
+            align-items: flex-end;
+
+            padding: 20px;
+
+            position: relative;
+            overflow: hidden;
+
+            transition: 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-7px);
+            border-color: #ffd21c;
+        }
+
+        .card-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .card-label {
+            color: #ff8a00;
+            font-size: 11px;
+            font-weight: bold;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+        }
+
+        .card h3 {
+            font-size: 22px;
+        }
+
+        .card p {
+            color: #999999;
+            font-size: 13px;
+            margin-top: 5px;
+        }
+
+        /* =========================
+           FOOTER
+        ========================= */
+
+        footer {
+            border-top: 1px solid #222222;
+
+            padding: 40px 5%;
+
+            color: #777777;
+            font-size: 13px;
+
+            text-align: center;
+        }
+
+        footer strong {
+            color: #ffd21c;
+        }
+
+        /* =========================
+           MOBILE
+        ========================= */
+
+        @media (max-width: 700px) {
+
+            .nav-links {
+                display: none;
+            }
+
+            nav {
+                padding: 0 6%;
+            }
+
+            .hero {
+                padding: 120px 7% 70px;
+                min-height: 80vh;
+            }
+
+            .hero h1 {
+                font-size: 65px;
+                letter-spacing: -3px;
+            }
+
+            .hero-description {
+                font-size: 15px;
+            }
+
+            .section {
+                padding: 50px 6%;
+            }
+
+            .catalog {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .card {
+                height: 230px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- =========================
+         NAVBAR
+    ========================= -->
+
+    <nav>
+
+        <div class="logo">
+            VDB2
+        </div>
+
+        <ul class="nav-links">
+            <li><a href="#inicio">Início</a></li>
+            <li><a href="#catalogo">Catálogo</a></li>
+            <li><a href="#originais">Originals</a></li>
+            <li><a href="#parceiros">Partners</a></li>
+        </ul>
+
+        <a href="#" class="login-button">
+            Entrar
+        </a>
+
+    </nav>
+
+
+    <!-- =========================
+         HERO
+    ========================= -->
+
+    <main id="inicio">
+
+        <section class="hero">
+
+            <div class="hero-content">
+
+                <div class="hero-label">
+                    VDB2 SHORTS ORIGINAL
+                </div>
+
+                <h1>
+                    MAFAT<span>ZZA</span>
+                </h1>
+
+                <p class="hero-description">
+                    Uma produção independente da VDB2.
+                    Histórias, personagens e mundos criados
+                    por uma nova geração de criadores.
+                </p>
+
+                <div class="hero-buttons">
+
+                    <a href="#" class="primary-button">
+                        ▶ Assistir
+                    </a>
+
+                    <a href="#catalogo" class="secondary-button">
+                        + Mais informações
+                    </a>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =========================
+             DESTAQUES
+        ========================= -->
+
+        <section class="section" id="catalogo">
+
+            <h2 class="section-title">
+                🔥 <span>Em destaque</span>
+            </h2>
+
+            <div class="catalog">
+
+                <div class="card">
+
+                    <div class="card-content">
+
+                        <div class="card-label">
+                            VDB2 Original
+                        </div>
+
+                        <h3>Mafatzza</h3>
+
+                        <p>
+                            Piloto · Em breve
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="card">
+
+                    <div class="card-content">
+
+                        <div class="card-label">
+                            Em breve
+                        </div>
+
+                        <h3>Próxima produção</h3>
+
+                        <p>
+                            VDB2 Shorts
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="card">
+
+                    <div class="card-content">
+
+                        <div class="card-label">
+                            Showcase
+                        </div>
+
+                        <h3>Espaço reservado</h3>
+
+                        <p>
+                            Para futuros criadores
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =========================
+             ORIGINALS
+        ========================= -->
+
+        <section class="section" id="originais">
+
+            <h2 class="section-title">
+                VDB2 <span>Originals</span>
+            </h2>
+
+            <div class="catalog">
+
+                <div class="card">
+
+                    <div class="card-content">
+
+                        <div class="card-label">
+                            VDB2 Shorts
+                        </div>
+
+                        <h3>Mafatzza</h3>
+
+                        <p>
+                            Uma produção VDB2
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =========================
+             PARTNERS
+        ========================= -->
+
+        <section class="section" id="parceiros">
+
+            <h2 class="section-title">
+                VDB2 <span>Partners</span>
+            </h2>
+
+            <div class="catalog">
+
+                <div class="card">
+
+                    <div class="card-content">
+
+                        <div class="card-label">
+                            Em breve
+                        </div>
+
+                        <h3>Estúdios independentes</h3>
+
+                        <p>
+                            Novas histórias a caminho.
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- =========================
+         FOOTER
+    ========================= -->
+
+    <footer>
+
+        <strong>VDB2</strong>
+
+        <br><br>
+
+        Cinema independente. Criadores. Histórias.
+
+        <br><br>
+
+        © 2026 VDB2
+
+    </footer>
+
+</body>
+</html>

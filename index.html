@@ -111,6 +111,135 @@
         .login-button:hover {
             background: #ffd21c;
             color: #0b0b0b;
+
+            .account-area {
+    position: relative;
+}
+
+.account-button {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+
+    background: rgba(255,255,255,0.06);
+
+    border: 1px solid #333;
+
+    border-radius: 6px;
+
+    padding: 7px 12px;
+
+    color: white;
+
+    cursor: pointer;
+
+    font-size: 14px;
+
+    transition: 0.3s;
+}
+
+.account-button:hover {
+    border-color: #ffd21c;
+}
+
+.account-avatar {
+    width: 28px;
+    height: 28px;
+
+    border-radius: 50%;
+
+    background: #ffd21c;
+
+    color: #0b0b0b;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.account-menu {
+    position: absolute;
+
+    right: 0;
+    top: calc(100% + 10px);
+
+    width: 190px;
+
+    background: #151515;
+
+    border: 1px solid #292929;
+
+    border-radius: 8px;
+
+    padding: 8px;
+
+    box-shadow: 0 15px 40px rgba(0,0,0,0.5);
+
+    display: none;
+
+    z-index: 2000;
+}
+
+.account-menu.active {
+    display: block;
+}
+
+.account-info {
+    padding: 10px 12px;
+
+    border-bottom: 1px solid #292929;
+
+    margin-bottom: 5px;
+}
+
+.account-info strong {
+    display: block;
+
+    color: white;
+
+    font-size: 14px;
+}
+
+.account-info span {
+    color: #888;
+
+    font-size: 12px;
+}
+
+.account-menu a,
+.logout-button {
+    display: block;
+
+    width: 100%;
+
+    padding: 10px 12px;
+
+    border: none;
+
+    background: none;
+
+    color: #ccc;
+
+    text-align: left;
+
+    text-decoration: none;
+
+    border-radius: 5px;
+
+    font-size: 13px;
+
+    cursor: pointer;
+}
+
+.account-menu a:hover,
+.logout-button:hover {
+    background: rgba(255,255,255,0.06);
+
+    color: #ffd21c;
+}
         }
 
         /* =========================
@@ -385,9 +514,76 @@ color: inherit;
             <li><a href="#parceiros">Partners</a></li>
         </ul>
 
-        <a href="#" class="login-button">
-            Entrar
-        </a>
+        <div class="account-area" id="account-area">
+
+    <a
+        href="login.html"
+        class="login-button"
+        id="login-button"
+    >
+        Entrar
+    </a>
+
+
+    <div
+        id="account-logged"
+        style="display: none;"
+    >
+
+        <button
+            class="account-button"
+            id="account-button"
+        >
+
+            <div
+                class="account-avatar"
+                id="account-avatar"
+            >
+                ?
+            </div>
+
+            <span id="account-username">
+                Conta
+            </span>
+
+        </button>
+
+
+        <div
+            class="account-menu"
+            id="account-menu"
+        >
+
+            <div class="account-info">
+
+                <strong id="account-name">
+                    Utilizador
+                </strong>
+
+                <span id="account-email">
+                    email
+                </span>
+
+            </div>
+
+
+            <a href="perfil.html">
+                Meu perfil
+            </a>
+
+
+            <button
+                class="logout-button"
+                id="logout-button"
+            >
+                Sair
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
 
     </nav>
 
@@ -595,5 +791,178 @@ color: inherit;
 
     </footer>
 
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script src="supabase-config.js"></script>
+
+
+<script>
+
+    const supabaseClient =
+        window.supabase.createClient(
+            SUPABASE_URL,
+            SUPABASE_KEY
+        );
+
+
+    const loginButton =
+        document.getElementById("login-button");
+
+    const accountLogged =
+        document.getElementById("account-logged");
+
+    const accountButton =
+        document.getElementById("account-button");
+
+    const accountMenu =
+        document.getElementById("account-menu");
+
+    const logoutButton =
+        document.getElementById("logout-button");
+
+
+    async function loadAccount() {
+
+        const {
+            data: {
+                user
+            }
+        } = await supabaseClient.auth.getUser();
+
+
+        if (!user) {
+
+            loginButton.style.display =
+                "inline-block";
+
+            accountLogged.style.display =
+                "none";
+
+            return;
+        }
+
+
+        loginButton.style.display =
+            "none";
+
+        accountLogged.style.display =
+            "block";
+
+
+        const {
+            data: profile,
+            error
+        } = await supabaseClient
+            .from("profiles")
+            .select("username, display_name")
+            .eq("id", user.id)
+            .single();
+
+
+        if (error) {
+
+            console.error(
+                "Erro ao carregar perfil:",
+                error
+            );
+
+            return;
+        }
+
+
+        const username =
+            profile.username || "utilizador";
+
+
+        const displayName =
+            profile.display_name || username;
+
+
+        document.getElementById(
+            "account-username"
+        ).textContent =
+            "@" + username;
+
+
+        document.getElementById(
+            "account-name"
+        ).textContent =
+            displayName;
+
+
+        document.getElementById(
+            "account-email"
+        ).textContent =
+            user.email;
+
+
+        document.getElementById(
+            "account-avatar"
+        ).textContent =
+            username
+                .charAt(0)
+                .toUpperCase();
+
+    }
+
+
+    accountButton.addEventListener(
+        "click",
+        function() {
+
+            accountMenu.classList.toggle(
+                "active"
+            );
+
+        }
+    );
+
+
+    logoutButton.addEventListener(
+        "click",
+        async function() {
+
+            const {
+                error
+            } = await supabaseClient.auth.signOut();
+
+
+            if (error) {
+
+                console.error(error);
+
+                return;
+            }
+
+
+            window.location.reload();
+
+        }
+    );
+
+
+    document.addEventListener(
+        "click",
+        function(event) {
+
+            if (
+                !document
+                    .getElementById("account-area")
+                    .contains(event.target)
+            ) {
+
+                accountMenu.classList.remove(
+                    "active"
+                );
+
+            }
+
+        }
+    );
+
+
+    loadAccount();
+
+</script>
 </body>
 </html>

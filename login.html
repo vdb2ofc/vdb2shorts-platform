@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="pt">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Entrar — VDB2 Shorts</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            min-height: 100vh;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            background:
+                radial-gradient(
+                    circle at 50% 0%,
+                    rgba(255, 138, 0, 0.12),
+                    transparent 40%
+                ),
+                #0b0b0b;
+
+            color: white;
+
+            font-family: Arial, Helvetica, sans-serif;
+
+            padding: 30px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 430px;
+        }
+
+        .logo {
+            text-align: center;
+            margin-bottom: 35px;
+        }
+
+        .logo-main {
+            font-size: 34px;
+            font-weight: 900;
+            letter-spacing: 1px;
+        }
+
+        .logo-main span {
+            color: #ffd21c;
+        }
+
+        .logo-main strong {
+            color: #ff8a00;
+        }
+
+        .logo-subtitle {
+            margin-top: 4px;
+
+            color: #aaa;
+
+            font-size: 8px;
+            font-weight: bold;
+
+            letter-spacing: 5px;
+        }
+
+        .box {
+            background: #151515;
+
+            border: 1px solid #292929;
+
+            border-radius: 12px;
+
+            padding: 32px;
+
+            box-shadow:
+                0 20px 60px rgba(0, 0, 0, 0.4);
+        }
+
+        h1 {
+            font-size: 28px;
+            margin-bottom: 8px;
+        }
+
+        .subtitle {
+            color: #888;
+
+            font-size: 14px;
+
+            margin-bottom: 30px;
+        }
+
+        label {
+            display: block;
+
+            color: #ccc;
+
+            font-size: 13px;
+            font-weight: bold;
+
+            margin-bottom: 8px;
+        }
+
+        input {
+            width: 100%;
+
+            padding: 13px 14px;
+
+            margin-bottom: 20px;
+
+            border-radius: 6px;
+
+            border: 1px solid #333;
+
+            background: #0e0e0e;
+
+            color: white;
+
+            outline: none;
+
+            font-size: 14px;
+        }
+
+        input:focus {
+            border-color: #ff8a00;
+        }
+
+        button {
+            width: 100%;
+
+            padding: 14px;
+
+            border: none;
+
+            border-radius: 6px;
+
+            background: #ffd21c;
+
+            color: #0b0b0b;
+
+            font-size: 14px;
+            font-weight: bold;
+
+            cursor: pointer;
+
+            transition: 0.2s;
+        }
+
+        button:hover {
+            background: #ff8a00;
+        }
+
+        button:disabled {
+            opacity: 0.5;
+            cursor: wait;
+        }
+
+        .message {
+            margin-top: 18px;
+
+            font-size: 13px;
+
+            line-height: 1.5;
+
+            text-align: center;
+        }
+
+        .register {
+            margin-top: 22px;
+
+            text-align: center;
+
+            color: #888;
+
+            font-size: 13px;
+        }
+
+        .register a {
+            color: #ffd21c;
+
+            text-decoration: none;
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+    <div class="container">
+
+        <div class="logo">
+
+            <div class="logo-main">
+                <span>VDB</span><strong>2</strong>
+            </div>
+
+            <div class="logo-subtitle">
+                SHORTS
+            </div>
+
+        </div>
+
+
+        <div class="box">
+
+            <h1>
+                Iniciar sessão
+            </h1>
+
+            <p class="subtitle">
+                Entra na tua Conta VDB2.
+            </p>
+
+
+            <form id="login-form">
+
+                <label for="email">
+                    Email
+                </label>
+
+                <input
+                    id="email"
+                    type="email"
+                    placeholder="email@exemplo.com"
+                    required
+                >
+
+
+                <label for="password">
+                    Password
+                </label>
+
+                <input
+                    id="password"
+                    type="password"
+                    placeholder="A tua password"
+                    required
+                >
+
+
+                <button
+                    id="login-button"
+                    type="submit"
+                >
+                    Entrar na VDB2
+                </button>
+
+
+                <div
+                    id="message"
+                    class="message"
+                ></div>
+
+            </form>
+
+
+            <div class="register">
+
+                Ainda não tens uma conta?
+
+                <a href="criar-conta.html">
+                    Criar conta
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+    <script src="supabase-config.js"></script>
+
+
+    <script>
+
+        const supabaseClient =
+            window.supabase.createClient(
+                SUPABASE_URL,
+                SUPABASE_KEY
+            );
+
+
+        const form =
+            document.getElementById("login-form");
+
+        const button =
+            document.getElementById("login-button");
+
+        const message =
+            document.getElementById("message");
+
+
+        form.addEventListener(
+            "submit",
+            async function(event) {
+
+                event.preventDefault();
+
+
+                const email =
+                    document
+                        .getElementById("email")
+                        .value
+                        .trim();
+
+
+                const password =
+                    document
+                        .getElementById("password")
+                        .value;
+
+
+                message.textContent = "";
+
+                button.disabled = true;
+
+                button.textContent =
+                    "A entrar...";
+
+
+                const {
+                    data,
+                    error
+                } = await supabaseClient.auth.signInWithPassword({
+
+                    email: email,
+
+                    password: password
+
+                });
+
+
+                if (error) {
+
+                    console.error(error);
+
+                    message.textContent =
+                        "Email ou password incorretos.";
+
+                    button.disabled = false;
+
+                    button.textContent =
+                        "Entrar na VDB2";
+
+                    return;
+                }
+
+
+                window.location.href =
+                    "index.html";
+
+            }
+
+        );
+
+    </script>
+
+</body>
+
+</html>

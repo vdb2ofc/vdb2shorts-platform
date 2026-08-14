@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="pt">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Criar Conta — VDB2 Shorts</title>
+
+</head>
+
+<body>
+
+    <h1>Conta VDB2</h1>
+
+    <p id="status">
+        A preparar...
+    </p>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+    <script src="supabase-config.js"></script>
+
+
+    <script>
+
+        const supabaseClient = window.supabase.createClient(
+            SUPABASE_URL,
+            SUPABASE_KEY
+        );
+
+
+        async function testarSupabase() {
+
+            const {
+                data,
+                error
+            } = await supabaseClient.auth.getSession();
+
+
+            if (error) {
+
+                document.getElementById("status").textContent =
+                    "Erro ao ligar ao Supabase.";
+
+                console.error(error);
+
+                return;
+            }
+
+
+            document.getElementById("status").textContent =
+                "Supabase ligado corretamente.";
+
+        }
+
+
+        testarSupabase();
+
+    </script>
+
+</body>
+
+</html>

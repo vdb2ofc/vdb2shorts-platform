@@ -47,10 +47,36 @@
         }
 
         .logo {
-            font-size: 28px;
-            font-weight: 900;
-            letter-spacing: 2px;
-            color: #ffd21c;
+    display: flex;
+    flex-direction: column;
+    line-height: 1;
+    text-decoration: none;
+}
+
+.logo-main {
+    font-size: 26px;
+    font-weight: 900;
+    letter-spacing: 1px;
+}
+
+.logo-main span {
+    color: #ffd21c;
+}
+
+.logo-main strong {
+    color: #ff8a00;
+}
+
+.logo-subtitle {
+    margin-top: 3px;
+
+    color: #bdbdbd;
+
+    font-size: 7px;
+    font-weight: 700;
+
+    letter-spacing: 4px;
+}
         }
 
         .nav-links {
@@ -346,8 +372,11 @@ color: inherit;
     <nav>
 
         <div class="logo">
-            VDB2
-        </div>
+    <div class="logo-main">
+        <span>VDB</span><strong>2</strong>
+    </div>
+    <div class="logo-subtitle">SHORTS</div>
+</div>
 
         <ul class="nav-links">
             <li><a href="#inicio">Início</a></li>

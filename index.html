@@ -197,16 +197,21 @@
 .account-info strong {
     display: block;
 
-    color: white;
+    color: #ffffff;
 
-    font-size: 14px;
+    font-size: 15px;
+
+    font-weight: 700;
+
+    margin-bottom: 3px;
 }
 
 .account-info span {
-    color: #888;
+    color: #888888;
 
     font-size: 12px;
 }
+
 
 .account-menu a,
 .logout-button {
@@ -553,17 +558,17 @@ color: inherit;
             id="account-menu"
         >
 
-            <div class="account-info">
+       <div class="account-info">
 
-                <strong id="account-name">
-                    Utilizador
-                </strong>
+    <strong id="account-name">
+        Utilizador
+    </strong>
 
-                <span id="account-email">
-                    email
-                </span>
+    <span id="account-username-small">
+        @utilizador
+    </span>
 
-            </div>
+</div>
 
 
             <a href="perfil.html">
@@ -889,10 +894,10 @@ color: inherit;
             displayName;
 
 
-        document.getElementById(
-            "account-email"
-        ).textContent =
-            user.email;
+ document.getElementById(
+    "account-username-small"
+).textContent =
+    "@" + username;
 
 
         document.getElementById(

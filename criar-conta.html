@@ -12,15 +12,317 @@
 
     <title>Criar Conta — VDB2 Shorts</title>
 
+    <style>
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            min-height: 100vh;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            background:
+                radial-gradient(
+                    circle at 50% 0%,
+                    rgba(255, 138, 0, 0.12),
+                    transparent 40%
+                ),
+                #0b0b0b;
+
+            color: white;
+
+            font-family: Arial, Helvetica, sans-serif;
+
+            padding: 30px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 430px;
+        }
+
+        .logo {
+            text-align: center;
+            margin-bottom: 35px;
+        }
+
+        .logo-main {
+            font-size: 34px;
+            font-weight: 900;
+            letter-spacing: 1px;
+        }
+
+        .logo-main span {
+            color: #ffd21c;
+        }
+
+        .logo-main strong {
+            color: #ff8a00;
+        }
+
+        .logo-subtitle {
+            margin-top: 4px;
+
+            color: #aaa;
+
+            font-size: 8px;
+            font-weight: bold;
+
+            letter-spacing: 5px;
+        }
+
+        .box {
+            background: #151515;
+
+            border: 1px solid #292929;
+
+            border-radius: 12px;
+
+            padding: 32px;
+
+            box-shadow:
+                0 20px 60px rgba(0, 0, 0, 0.4);
+        }
+
+        h1 {
+            font-size: 28px;
+            margin-bottom: 8px;
+        }
+
+        .subtitle {
+            color: #888;
+
+            font-size: 14px;
+
+            margin-bottom: 30px;
+        }
+
+        label {
+            display: block;
+
+            color: #ccc;
+
+            font-size: 13px;
+            font-weight: bold;
+
+            margin-bottom: 8px;
+        }
+
+        input {
+            width: 100%;
+
+            padding: 13px 14px;
+
+            margin-bottom: 20px;
+
+            border-radius: 6px;
+
+            border: 1px solid #333;
+
+            background: #0e0e0e;
+
+            color: white;
+
+            outline: none;
+
+            font-size: 14px;
+        }
+
+        input:focus {
+            border-color: #ff8a00;
+        }
+
+        button {
+            width: 100%;
+
+            padding: 14px;
+
+            border: none;
+
+            border-radius: 6px;
+
+            background: #ffd21c;
+
+            color: #0b0b0b;
+
+            font-size: 14px;
+            font-weight: bold;
+
+            cursor: pointer;
+
+            transition: 0.2s;
+        }
+
+        button:hover {
+            background: #ff8a00;
+        }
+
+        button:disabled {
+            opacity: 0.5;
+            cursor: wait;
+        }
+
+        .message {
+            margin-top: 18px;
+
+            font-size: 13px;
+
+            line-height: 1.5;
+
+            text-align: center;
+        }
+
+        .login {
+            margin-top: 22px;
+
+            text-align: center;
+
+            color: #888;
+
+            font-size: 13px;
+        }
+
+        .login a {
+            color: #ffd21c;
+
+            text-decoration: none;
+        }
+
+    </style>
+
 </head>
+
 
 <body>
 
-    <h1>Conta VDB2</h1>
+    <div class="container">
 
-    <p id="status">
-        A preparar...
-    </p>
+        <div class="logo">
+
+            <div class="logo-main">
+                <span>VDB</span><strong>2</strong>
+            </div>
+
+            <div class="logo-subtitle">
+                SHORTS
+            </div>
+
+        </div>
+
+
+        <div class="box">
+
+            <h1>
+                Criar conta
+            </h1>
+
+            <p class="subtitle">
+                Cria a tua Conta VDB2.
+            </p>
+
+
+            <form id="signup-form">
+
+                <label for="username">
+                    Nome de utilizador
+                </label>
+
+                <input
+                    id="username"
+                    type="text"
+                    placeholder="martim"
+                    minlength="3"
+                    maxlength="20"
+                    required
+                >
+
+
+                <label for="display-name">
+                    Nome
+                </label>
+
+                <input
+                    id="display-name"
+                    type="text"
+                    placeholder="Martim Fernandes"
+                    maxlength="50"
+                    required
+                >
+
+
+                <label for="email">
+                    Email
+                </label>
+
+                <input
+                    id="email"
+                    type="email"
+                    placeholder="email@exemplo.com"
+                    required
+                >
+
+
+                <label for="password">
+                    Password
+                </label>
+
+                <input
+                    id="password"
+                    type="password"
+                    placeholder="Mínimo 6 caracteres"
+                    minlength="6"
+                    required
+                >
+
+
+                <label for="password-confirm">
+                    Confirmar password
+                </label>
+
+                <input
+                    id="password-confirm"
+                    type="password"
+                    placeholder="Repete a password"
+                    minlength="6"
+                    required
+                >
+
+
+                <button
+                    id="signup-button"
+                    type="submit"
+                >
+                    Criar Conta VDB2
+                </button>
+
+
+                <div
+                    id="message"
+                    class="message"
+                ></div>
+
+            </form>
+
+
+            <div class="login">
+
+                Já tens uma conta?
+
+                <a href="login.html">
+                    Entrar
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
 
 
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -30,38 +332,142 @@
 
     <script>
 
-        const supabaseClient = window.supabase.createClient(
-            SUPABASE_URL,
-            SUPABASE_KEY
-        );
+        const supabaseClient =
+            window.supabase.createClient(
+                SUPABASE_URL,
+                SUPABASE_KEY
+            );
 
 
-        async function testarSupabase() {
+        const form =
+            document.getElementById("signup-form");
 
-            const {
-                data,
-                error
-            } = await supabaseClient.auth.getSession();
+        const button =
+            document.getElementById("signup-button");
+
+        const message =
+            document.getElementById("message");
 
 
-            if (error) {
+        form.addEventListener(
+            "submit",
+            async function(event) {
 
-                document.getElementById("status").textContent =
-                    "Erro ao ligar ao Supabase.";
+                event.preventDefault();
 
-                console.error(error);
 
-                return;
+                const username =
+                    document
+                        .getElementById("username")
+                        .value
+                        .trim()
+                        .toLowerCase();
+
+
+                const displayName =
+                    document
+                        .getElementById("display-name")
+                        .value
+                        .trim();
+
+
+                const email =
+                    document
+                        .getElementById("email")
+                        .value
+                        .trim();
+
+
+                const password =
+                    document
+                        .getElementById("password")
+                        .value;
+
+
+                const passwordConfirm =
+                    document
+                        .getElementById("password-confirm")
+                        .value;
+
+
+                message.textContent = "";
+
+
+                if (password !== passwordConfirm) {
+
+                    message.textContent =
+                        "As passwords não coincidem.";
+
+                    return;
+                }
+
+
+                if (!/^[a-z0-9_]{3,20}$/.test(username)) {
+
+                    message.textContent =
+                        "O nome de utilizador só pode ter letras, números e _.";
+
+                    return;
+                }
+
+
+                button.disabled = true;
+
+                button.textContent =
+                    "A criar conta...";
+
+
+                const {
+                    data,
+                    error
+                } = await supabaseClient.auth.signUp({
+
+                    email: email,
+
+                    password: password,
+
+                    options: {
+
+                        data: {
+
+                            username:
+                                username,
+
+                            display_name:
+                                displayName
+
+                        }
+
+                    }
+
+                });
+
+
+                if (error) {
+
+                    console.error(error);
+
+                    message.textContent =
+                        error.message;
+
+                    button.disabled = false;
+
+                    button.textContent =
+                        "Criar Conta VDB2";
+
+                    return;
+                }
+
+
+                message.textContent =
+                    "Conta criada! Verifica o teu email para confirmar a conta.";
+
+                button.textContent =
+                    "Conta criada";
+
             }
 
-
-            document.getElementById("status").textContent =
-                "Supabase ligado corretamente.";
-
-        }
-
-
-        testarSupabase();
+        );
 
     </script>
 

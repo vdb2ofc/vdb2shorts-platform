@@ -442,7 +442,17 @@
 
             margin-bottom: 20px;
         }
+.profile-bio {
+    color: #bdbdbd;
 
+    font-size: 14px;
+
+    line-height: 1.5;
+
+    max-width: 550px;
+
+    margin-bottom: 20px;
+}
 
         .profile-actions {
 
@@ -835,6 +845,11 @@
                         </span>
 
                     </div>
+                    <div
+    class="profile-bio"
+    id="profile-bio"
+    style="display: none;"
+></div>
 
 
                     <a href="perfil.html">
@@ -1231,14 +1246,40 @@
                 "profile-username"
             ).textContent =
                 "@" + username;
+            const bioElement =
+    document.getElementById(
+        "profile-bio"
+    );
 
 
-            document.getElementById(
-                "profile-avatar"
-            ).textContent =
-                username
-                    .charAt(0)
-                    .toUpperCase();
+if (profile.bio) {
+
+    bioElement.textContent =
+        profile.bio;
+
+    bioElement.style.display =
+        "block";
+
+}
+
+
+            const profileAvatar =
+    document.getElementById(
+        "profile-avatar"
+    );
+
+
+if (profile.avatar_url) {
+
+    profileAvatar.textContent =
+        profile.avatar_url;
+
+} else {
+
+    profileAvatar.textContent =
+        username
+            .charAt(0)
+            .toUpperCase();
 
         }
 
